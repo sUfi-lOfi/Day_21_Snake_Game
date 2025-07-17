@@ -1,16 +1,25 @@
 from turtle import Turtle
+from urllib.response import addclosehook
+
+
 class Snake:
     def __init__(self):
         self.snake_body = []
         self.snake_dir = 0
+        self.starting_positions = [(-20,0),(-40,0),(-60,0)]
     def create_snake(self):
-        for n in range(3):
-            turtle = Turtle()
-            turtle.shape("square")
-            turtle.penup()
-            turtle.color("#FFFFFF")
-            turtle.setx(-20*n)
-            self.snake_body.append(turtle)
+        for pos in self.starting_positions:
+            self.add_segment(pos)
+
+    def add_segment(self,position):
+        turtle = Turtle()
+        turtle.shape("square")
+        turtle.penup()
+        turtle.color("#FFFFFF")
+        turtle.goto(*position)
+        self.snake_body.append(turtle)
+    def extend(self):
+        self.add_segment(self.snake_body[-1].pos())
     def move(self):
         for n in range(len(self.snake_body)-1,0,-1):
             cords = self.snake_body[n-1].pos()
